@@ -71,20 +71,20 @@ class CarInterface(object):
     ret.steerKiBP, ret.steerKpBP = [[0.], [0.]]
     ret.steerActuatorDelay = 0.12  # Default delay, Prius has larger delay
 
-    if candidate == CAR.PRIUS: # updated for prime
+    if candidate == CAR.PRIUS: # experimenting with different values for 2018 prime
       ret.safetyParam = 66                         # was 66
       ret.wheelbase = 2.70                         # 2.70 verified correct for 2018 prime
       ret.steerRatio = 13.4                        # was 15.0, updated for prime per @larryjustin
       ret.mass = 3370 * CV.LB_TO_KG + std_cargo    # was 3045,  updated for prime per @larryjustin
-      ret.steerKpV, ret.steerKiV = [[0.3], [0.05]] # was 0.4, 0.01. For minor corrections, car was overshooting. Turn down K, bump I.
-      ret.steerKf = 0.00006   # full torque for 10 deg at 80mph means 0.00007818594
+      ret.steerKpV, ret.steerKiV = [[0.2], [0.06]] # was 0.4, 0.01. For minor corrections, car was overshooting. Turn down K, bump I.
+      ret.steerKf = 0.00008                        # was 0.00006; need more torque to keep car on the road.
 
       f = 1.43353663
       tireStiffnessFront_civic *= f
       tireStiffnessRear_civic *= f
 
       # Prius has a very bad actuator
-      ret.steerActuatorDelay = 0.25
+      # ret.steerActuatorDelay = 0.25                # was 0.25
     elif candidate in [CAR.RAV4, CAR.RAV4H]:
       ret.safetyParam = 73  # see conversion factor for STEER_TORQUE_EPS in dbc file
       ret.wheelbase = 2.65
